@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Web Game</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+        #gameContainer {
+            display: flex;
+            align-items: center;
+        }
+        #counter {
+            margin-left: 20px;
+            font-size: 20px;
+        }
+        #modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border: 1px solid black;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        #modal button {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="gameContainer">
+        <canvas id="gameCanvas" width="800" height="600"></canvas>
+        <div id="counter">Gems left: 100</div>
+    </div>
+    <div id="modal">
+        <p>Congratulations! You found them all.</p>
+        <button id="resetButton">Reset Game</button>
+    </div>
+    <script src="game.js"></script>
+</body>
+</html>
