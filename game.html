@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Web Game</title>
+    <title>Gem Maze Adventure</title>
     <style>
         canvas {
             border: 1px solid black;
@@ -13,6 +13,10 @@
             align-items: center;
         }
         #counter {
+            margin-left: 20px;
+            font-size: 20px;
+        }
+        #timer {
             margin-left: 20px;
             font-size: 20px;
         }
@@ -35,7 +39,10 @@
 <body>
     <div id="gameContainer">
         <canvas id="gameCanvas" width="800" height="600"></canvas>
-        <div id="counter">Gems left: 100</div>
+        <div>
+            <div id="counter">Gems left: 100</div>
+            <div id="timer">Time left: 120s</div>
+        </div>
     </div>
     <div id="modal">
         <p>Congratulations! You found them all.</p>
