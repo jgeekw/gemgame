@@ -1,6 +1,7 @@
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 const counterElement = document.getElementById('counter');
+const timerElement = document.getElementById('timer');
 const modal = document.getElementById('modal');
 const resetButton = document.getElementById('resetButton');
 
@@ -12,6 +13,8 @@ let gemCount = 100;
 const mazeWidth = 40;
 const mazeHeight = 30;
 const cellSize = 20;
+let timeLeft = 120; // 2 minutes in seconds
+let timerInterval;
 
 // Initialize maze
 function initializeMaze() {
@@ -78,9 +81,16 @@ function update() {
             gemCount--;
             counterElement.textContent = `Gems left: ${gemCount}`;
             if (gemCount === 0) {
-                showModal();
+                clearInterval(timerInterval);
+                showModal("Congratulations! You found them all.");
             }
         }
+    }
+
+    // Check if time is up
+    if (timeLeft <= 0) {
+        clearInterval(timerInterval);
+        showModal("You have lost. Time's up!");
     }
 }
 
@@ -127,24 +137,40 @@ function isColliding(rect1, rect2) {
            rect1.y + rect1.height > rect2.y;
 }
 
-function showModal() {
+function showModal(message) {
+    modal.querySelector('p').textContent = message;
     modal.style.display = 'block';
 }
 
 function resetGame() {
     player = { x: 10, y: 10, width: 10, height: 10, speed: 5 };
     gemCount = 100;
+    timeLeft = 120;
     counterElement.textContent = `Gems left: ${gemCount}`;
+    timerElement.textContent = `Time left: ${timeLeft}s`;
     initializeMaze();
     initializeGems();
     modal.style.display = 'none';
+    startTimer();
+}
+
+function startTimer() {
+    timerInterval = setInterval(() => {
+        timeLeft--;
+        timerElement.textContent = `Time left: ${timeLeft}s`;
+        if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            showModal("You have lost. Time's up!");
+        }
+    }, 1000);
 }
 
 function collectAllGems() {
     gems = [];
     gemCount = 0;
     counterElement.textContent = `Gems left: ${gemCount}`;
-    showModal();
+    clearInterval(timerInterval);
+    showModal("Congratulations! You found them all.");
 }
 
 resetButton.addEventListener('click', resetGame);
@@ -161,3 +187,5 @@ setInterval(() => {
     update();
     draw();
 }, 1000 / 60);
+
+startTimer();
